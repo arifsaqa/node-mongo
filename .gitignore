@@ -1,3 +1,4 @@
 /server/public/*
 /client/public/*
 /*/node_modules/*
+*.env*

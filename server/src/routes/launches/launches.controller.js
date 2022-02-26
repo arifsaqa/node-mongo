@@ -2,7 +2,7 @@ const {
   getAllLaunches,
   scheduleNewLaunch,
   existsLaunchWithId,
-  abortLauchWithId
+  abortLauchById
 } = require('../../models/launches.model')
 
 async function httpGetAllLaunches(req, res) {
@@ -30,15 +30,24 @@ async function httpAddNewLaunch(req, res) {
   return res.status(201).json(launch);
 }
 
-function httpAbortLaunch(req, res) {
+async function httpAbortLaunch(req, res) {
   const laucnhId = Number(req.params.id);
-  if (!existsLaunchWithId(laucnhId)) {
-    res.status(404).json({
+  const isLaunchExist = await existsLaunchWithId(laucnhId);
+  if (!isLaunchExist) {
+    return res.status(404).json({
       error: "Lauch not found",
     })
   } else {
-    const aborted = abortLauchWithId(laucnhId);
-    res.status(200).json(aborted);
+    const aborted = await abortLauchById(laucnhId);
+    if (!aborted) {
+      return res.status(400).json({
+        error: 'Launch not aborted'
+      });
+    } else {
+      return res.status(200).json({
+        oke: true
+      });
+    }
   }
 
 }
@@ -46,5 +55,5 @@ function httpAbortLaunch(req, res) {
 module.exports = {
   httpGetAllLaunches,
   httpAddNewLaunch,
-  httpAbortLaunch, 
+  httpAbortLaunch,
 }

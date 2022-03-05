@@ -1,5 +1,5 @@
 /server/public/*
 /client/public/*
-/*/node_modules/*
-node_modules/*
+# /*/node_modules/*
+*node_modules*
 *.env*

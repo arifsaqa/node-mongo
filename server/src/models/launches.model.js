@@ -112,7 +112,7 @@ async function saveLaunch(launch) {
 async function getLatestFlightNumber() {
   const latestLaunch = await launches
     .findOne()
-    .sort('-flightNumber');
+    .sort('flightNumber');
   if (!latestLaunch) {
     return DEFAULT_FLIGHT_NUMBER;
   }

@@ -18,7 +18,7 @@ describe('Launches API', () => {
   describe('test GET /launches', () => {
     test('this should return respond with status code 200', async () => {
       const response = await request(app)
-        .get("/launches")
+        .get("/v1/launches")
         .expect('Content-Type', /json/)
         .expect(200);
       ;
